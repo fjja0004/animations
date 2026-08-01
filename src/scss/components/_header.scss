@@ -6,15 +6,14 @@ body {
     top: 16px;
     z-index: 99;
 
-    .main-header-container {
-      position: relative;
-    }
-
     &.menu-open {
       .main-header-background {
+        display: block;
         opacity: 1;
-        transform: translateY(0);
-        visibility: visible;
+
+        @starting-style {
+          opacity: 0;
+        }
       }
     }
 
@@ -57,24 +56,16 @@ body {
     }
 
     .main-header-background {
-      @media (width > 768px) {
-        display: none;
-      }
       background-color: antiquewhite;
       border-radius: 0 0 12px 12px;
-      left: 0;
+      display: none;
       opacity: 0;
       padding: 12px;
-      position: absolute;
-      right: 0;
-      top: calc(100% - 10px);
       transform: translateY(-15px);
-      transition:
-        opacity .3s ease,
-        transform .3s ease,
-        visibility .3s ease;
-      visibility: hidden;
-      z-index: 1;
+      transition-behavior: allow-discrete;
+      transition-duration: .4s;
+      transition-timing-function: ease;
+      // transition: display, opacity;
 
       .menu-wrapper {
         display: flex;
