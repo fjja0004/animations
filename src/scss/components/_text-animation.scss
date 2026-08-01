@@ -1,31 +1,47 @@
 body {
   >main {
-    .scroll-reveal-text {
-      font-size: 1.4rem;
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: #38bdf8;
+      transform-origin: 0%;
+      z-index: 100;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      margin-top: 40px;
+    }
+
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
       font-weight: bold;
-      line-height: 1.4;
-      margin: 0;
+      opacity: 0;
+      /* Pre-hide for animation */
+      cursor: pointer;
+    }
 
-      /* Make the text invisible */
-      color: transparent;
+    /* Spacer to allow scrolling */
+    .spacer {
+      height: 60vh;
+    }
 
-      /* Create the half-black, half-transparent background */
-      background-image: linear-gradient(to bottom,
-          #000 50%,
-          transparent 50%);
-
-      /* Double the height */
-      background-size: 100% 200%;
-
-      /* Clip it to the text */
-      background-clip: text;
-      -webkit-background-clip: text;
-      /* Required for Safari/Chrome */
-
-      background-position: 0 100%;
-
-      /* Add a tiny smoothing transition so it doesn't look jittery on low-refresh rate mice */
-      transition: background-position 0.4s ease-out;
+    /* Reveal Box */
+    .reveal-box {
+      background: #334155;
+      padding: 40px;
+      border-radius: 16px;
+      opacity: 0;
+      /* Pre-hide for animation */
     }
   }
 }
