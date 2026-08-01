@@ -23,9 +23,9 @@ body {
       /* Required for Safari/Chrome */
 
       background-position: 0 100%;
-
-      /* Add a tiny smoothing transition so it doesn't look jittery on low-refresh rate mice */
-      transition: background-position 0.4s ease-out;
+      
+      /* REMOVED: transition: background-position 0.4s ease-out; */
+      /* Motion handles the smoothing natively now */
     }
   }
 }
