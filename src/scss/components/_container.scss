@@ -1,0 +1,36 @@
+$grid-gutter-width: 1.5rem !default;
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1320px
+) !default;
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+) !default;
+
+.container {
+  width: 100%;
+  padding-right: ($grid-gutter-width * 0.5);
+  padding-left: ($grid-gutter-width * 0.5);
+  margin-right: auto;
+  margin-left: auto;
+
+  @each $name, $breakpoint in $grid-breakpoints {
+    $max-width: map-get($container-max-widths, $name);
+
+    @if $max-width {
+      @media (min-width: $breakpoint) {
+        max-width: $max-width;
+      }
+    }
+  }
+}
