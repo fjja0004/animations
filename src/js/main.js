@@ -1,14 +1,20 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const textElements = document.querySelectorAll('.scroll-reveal-text');
-  if (textElements.length === 0) return;
+import $ from 'jquery';
 
+$(document).ready(function () {
+  const $textElements = $('.scroll-reveal-text');
+  
+  // Exit early if no elements exist on the page
+  if (!$textElements.length) return;
+
+  // We still use a native Set to track elements because it's much faster 
+  // than searching through jQuery arrays on every scroll tick
   const activeElements = new Set();
   let isListeningToScroll = false;
   let ticking = false;
 
   // The math engine: calculates progress for active elements
   const updateScrollProgress = () => {
-    const windowHeight = window.innerHeight;
+    const windowHeight = $(window).height();
     
     // Set your animation trigger zones (85% to 40% of the screen)
     const startReveal = windowHeight * 0.85;
@@ -16,6 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const distance = startReveal - endReveal;
 
     activeElements.forEach((el) => {
+      // Native getBoundingClientRect is used here because it is significantly 
+      // faster than jQuery's .offset() which triggers browser layout recalculations
       const rect = el.getBoundingClientRect();
       
       // Calculate how far the element has moved through the trigger zone
@@ -27,11 +35,11 @@ document.addEventListener("DOMContentLoaded", () => {
       // Convert progress to background position (100% down to 0%)
       const positionY = 100 - (progress * 100);
       
-      // Apply the style
-      el.style.backgroundPosition = `0 ${positionY}%`;
+      // Apply the style using jQuery
+      $(el).css('background-position', `0 ${positionY}%`);
     });
 
-    // Reset the rAF lock
+    // Reset the requestAnimationFrame lock
     ticking = false;
   };
 
@@ -60,14 +68,15 @@ document.addEventListener("DOMContentLoaded", () => {
     // Toggle the scroll listener on/off for performance
     if (stateChanged) {
       if (activeElements.size > 0 && !isListeningToScroll) {
-        // { passive: true } prevents the listener from blocking scroll performance
-        window.addEventListener('scroll', onScroll, { passive: true });
+        // Bind the scroll event using jQuery
+        $(window).on('scroll.revealText', onScroll);
         isListeningToScroll = true;
         
         // Force an immediate calculation so things don't jump
         onScroll(); 
       } else if (activeElements.size === 0 && isListeningToScroll) {
-        window.removeEventListener('scroll', onScroll);
+        // Unbind the scroll event to save CPU when elements are off-screen
+        $(window).off('scroll.revealText');
         isListeningToScroll = false;
       }
     }
@@ -77,6 +86,9 @@ document.addEventListener("DOMContentLoaded", () => {
     rootMargin: "20% 0px 20% 0px"
   });
 
-  // Attach the observer to all elements
-  textElements.forEach((el) => observer.observe(el));
+  // Attach the observer to all elements in the jQuery collection
+  $textElements.each(function () {
+    // 'this' refers to the native DOM element inside a jQuery .each() loop
+    observer.observe(this);
+  });
 });
