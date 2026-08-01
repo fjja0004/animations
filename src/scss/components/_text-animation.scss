@@ -1,31 +1,29 @@
 body {
   >main {
     .scroll-reveal-text {
-      font-size: 1.4rem;
+      font-size: 2rem;
       font-weight: bold;
       line-height: 1.4;
       margin: 0;
 
-      /* Make the text invisible */
+      /* Make the physical text invisible */
       color: transparent;
 
-      /* Create the half-black, half-transparent background */
-      background-image: linear-gradient(to bottom,
-          #000 50%,
-          transparent 50%);
+      /* The paintbrush: half black (or any color), half invisible */
+      background-image: linear-gradient(to bottom, #000 50%, transparent 50%);
 
-      /* Double the height */
+      /* Double the height so the invisible part covers the text initially */
       background-size: 100% 200%;
-
-      /* Clip it to the text */
-      background-clip: text;
-      -webkit-background-clip: text;
-      /* Required for Safari/Chrome */
-
       background-position: 0 100%;
+      /* 100% means hidden, 0% means revealed */
 
-      /* Add a tiny smoothing transition so it doesn't look jittery on low-refresh rate mice */
-      transition: background-position 0.4s ease-out;
+      /* Clip the gradient to the shape of the text */
+      -webkit-background-clip: text;
+      /* Safari, Chrome, Edge */
+      background-clip: text;
+      /* Standard */
+
+      /* Important: NO transition property here. We update it frame-by-frame in JS */
     }
   }
 }
