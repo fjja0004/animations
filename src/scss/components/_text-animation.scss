@@ -1,5 +1,17 @@
 body {
   >main {
+    .reveal-container {
+      @media (width <= 768px) {
+        flex-direction: column;
+      }
+      display: flex;
+      gap: 2.4rem;
+
+      > * {
+        flex: 1 1 50%;
+      }
+    }
+
     .scroll-reveal-text {
       font-size: 1.4rem;
       font-weight: bold;
