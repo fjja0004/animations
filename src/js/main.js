@@ -20,7 +20,9 @@ $(document).ready(function ($) {
     $element.empty();
 
     // 1C. Temporarily wrap each word in an inline <span> to measure its position
-    const $wordSpans = words.map(word => $('<span>').text(word + ' '));
+    const $wordSpans = words.map(function (word) {
+      return $('<span>').text(word + ' ');
+    });
     $element.append($wordSpans);
 
     // 1D. Group words by matching vertical offsets (offsetTop)
@@ -28,7 +30,7 @@ $(document).ready(function ($) {
     let currentTop = null;
     let currentLine = [];
 
-    $wordSpans.forEach($span => {
+    $wordSpans.forEach(function ($span) {
       // Get exact vertical pixel position relative to parent
       const top = $span[0].offsetTop;
 
@@ -49,7 +51,7 @@ $(document).ready(function ($) {
     // 1E. Rebuild the HTML with .line-mask and .line-inner elements
     $element.empty();
 
-    lines.forEach((lineWords, index) => {
+    lines.forEach(function (lineWords, index) {
       const lineText = lineWords.join('').trim();
 
       const $lineMask = $('<span>', { class: 'line-mask' });
@@ -83,8 +85,8 @@ $(document).ready(function ($) {
       threshold: 0.1
     };
 
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
+    const observer = new IntersectionObserver(function (entries, observer) {
+      entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           // Add visible class to trigger CSS transition
           $(entry.target).addClass('is-visible');
