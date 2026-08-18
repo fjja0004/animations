@@ -1,41 +1,30 @@
 body {
   >main {
-    .reveal-container {
-      @media (width <=768px) {
-        flex-direction: column;
+    color: black;
+
+    .animate-lines {
+      .line-mask {
+        display: block;
+        overflow: hidden;
       }
-      display: flex;
-      gap: 2.4rem;
 
-      > * {
-        flex: 1 1 50%;
+      .line-inner {
+        display: block;
+        opacity: 0;
+        transform: translateY(1.6rem);
+        transition:
+          opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        transition-delay: calc(var(--line-index, 0) * .08s);
+        will-change: opacity, transform;
       }
-    }
 
-    .scroll-reveal-text {
-      font-size: 1.4rem;
-      font-weight: bold;
-      line-height: 1.4;
-      margin: 0;
-
-      /* Make the physical text invisible */
-      color: transparent;
-
-      /* The paintbrush: half black (or any color), half invisible */
-      background-image: linear-gradient(to bottom, #000 50%, transparent 50%);
-
-      /* Double the height so the invisible part covers the text initially */
-      background-size: 100% 200%;
-      background-position: 0 100%;
-      /* 100% means hidden, 0% means revealed */
-
-      /* Clip the gradient to the shape of the text */
-      -webkit-background-clip: text;
-      /* Safari, Chrome, Edge */
-      background-clip: text;
-      /* Standard */
-
-      /* Important: NO transition property here. We update it frame-by-frame in JS */
+      &.is-visible {
+        .line-inner {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
     }
   }
 }
